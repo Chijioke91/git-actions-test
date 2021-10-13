@@ -1,0 +1,32 @@
+name: run shell commands
+
+on: [push]
+
+jobs:
+  run-shell-commands:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: echo "Hi, How are you?"
+
+      - name: run multi-line commands
+        run: |
+          node -v
+          npm -v
+
+      - name: run python commands
+        run: |
+          import platform
+          print(platform.processor())
+        shell: python
+
+  run-windows-commands:
+    runs-on: windows-latest
+    needs: [run-shell-commands]
+    steps:
+      - name: prints current powershell directory
+        run: Get-Location
+        shell: powershell
+      - name: prints current bash directory
+        run: pwd
+        shell: bash
